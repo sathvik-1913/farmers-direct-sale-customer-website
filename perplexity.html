@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Farmer Direct - Single Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        /* Add some basic shared styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(to right, #2d5a27, #4a7c59);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        nav ul li {
+            cursor: pointer;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        nav ul li a:hover,
+        nav ul li a.active {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section {
+            display: none;
+        }
+
+        section.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Farmer Direct</h1>
+        <nav>
+            <ul id="nav-list">
+                <li><a href="#" data-section="buyer-interface" class="active">Buyer Interface</a></li>
+                <li><a href="#" data-section="about-us">About Us</a></li>
+                <li><a href="#" data-section="contact-us">Contact Us</a></li>
+                <li><a href="#" data-section="faq">FAQ</a></li>
+                <li><a href="#" data-section="signup">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="buyer-interface" class="active">
+            <!-- Buyer Interface content from buyer-interface.html -->
+            <!-- You can paste the full content of buyer-interface.html body here -->
+            <!-- Placeholder below -->
+            <h2>Buyer Interface</h2>
+            <p>Welcome to the buyer interface section...</p>
+        </section>
+        <section id="about-us">
+            <!-- About Us content from buyer-aboutuspage.html text -->
+            <h2>About Us</h2>
+            <p>Farmer's Direct Connect was founded with a simple yet powerful vision: to create a direct connection
+                between farmers and buyers, eliminating middlemen...</p>
+            <p>Our mission, visionaries, benefits, and contact info...</p>
+        </section>
+        <section id="contact-us">
+            <!-- Contact Us content from buyer-contactus.html -->
+            <h2>Contact Us</h2>
+            <p>We're here to help! Get in touch with us for any questions or concerns.</p>
+            <p>Email: farmerapp@gmail.com</p>
+            <p>Phone: 1111-2235-5567 (Available 9 AM - 6 PM, Monday to Saturday)</p>
+            <p>Address: A.P, Vijayawada</p>
+        </section>
+        <section id="faq">
+            <!-- FAQ content from buyer-faq.html -->
+            <h2>FAQs</h2>
+            <p>Find quick answers to common questions about Farmer Direct...</p>
+        </section>
+        <section id="signup">
+            <!-- Signup content from buyer-signup.html -->
+            <h2>Sign Up</h2>
+            <p>Enter your details to get started...</p>
+        </section>
+    </main>
+    <script>
+        // JavaScript to toggle sections on nav click
+        const navLinks = document.querySelectorAll('#nav-list a');
+        const sections = document.querySelectorAll('main section');
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('data-section');
+
+                navLinks.forEach(n => n.classList.remove('active'));
+                link.classList.add('active');
+
+                sections.forEach(section => {
+                    if (section.id === target) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

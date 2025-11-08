@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Tap to Enter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #FF9933, #FFFFFF, #138808);
+            background-size: 400% 400%;
+            animation: gradientFloat 15s ease infinite;
+        }
+
+        .background::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, transparent 0%, rgba(255, 255, 255, 0.3) 100%);
+        }
+
+        .content {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            max-width: 90%;
+            width: 450px;
+            animation: contentAppear 1.5s ease-out;
+        }
+
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #138808;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #333;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .tap-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+        }
+
+        .tap-button {
+            background: linear-gradient(135deg, #FF9933, #138808);
+            border: none;
+            border-radius: 50px;
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 8px 20px rgba(19, 136, 8, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tap-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(19, 136, 8, 0.4);
+        }
+
+        .tap-button:active {
+            transform: translateY(0);
+        }
+
+        .tap-button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transform: translateX(-100%);
+        }
+
+        .tap-button:hover::after {
+            animation: shimmer 1.5s ease infinite;
+        }
+
+        .tap-hint {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #777;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .feature {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100px;
+        }
+
+        .feature-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: #138808;
+        }
+
+        .feature-text {
+            font-size: 0.9rem;
+            color: #555;
+            text-align: center;
+        }
+
+        .loading {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .loading-bar {
+            width: 250px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .loading-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #FF9933, #138808);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+        }
+
+        .loading-text {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .flag-colors {
+            display: flex;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 25px;
+        }
+
+        .saffron {
+            flex: 1;
+            background: #FF9933;
+        }
+
+        .white {
+            flex: 1;
+            background: #FFFFFF;
+            position: relative;
+        }
+
+        .white::after {
+            content: '✸';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #000080;
+            font-size: 12px;
+        }
+
+        .green {
+            flex: 1;
+            background: #138808;
+        }
+
+        @keyframes gradientFloat {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes contentAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .content {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .tap-button {
+                padding: 15px 40px;
+                font-size: 1.1rem;
+            }
+
+            .features {
+                gap: 10px;
+            }
+
+            .feature {
+                width: 80px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+
+    <div class="content">
+        <div class="logo">
+            <i class="fas fa-seedling"></i>
+        </div>
+        <h1>Welcome to AgriConnect</h1>
+        <p class="subtitle">Connecting farmers with resources, knowledge, and markets for sustainable agriculture</p>
+
+        <div class="tap-area">
+            <button class="tap-button" id="enterButton">
+                <i class="fas fa-hand-point-up"></i> Tap to Enter
+            </button>
+            <p class="tap-hint">
+                <i class="fas fa-info-circle"></i> Tap anywhere or click the button above
+            </p>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-tractor"></i>
+                </div>
+                <div class="feature-text">Modern Farming</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-hand-holding-water"></i>
+                </div>
+                <div class="feature-text">Water Management</div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="feature-text">Market Access</div>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            <p class="loading-text">Redirecting to login page...</p>
+        </div>
+
+        <div class="flag-colors">
+            <div class="saffron"></div>
+            <div class="white"></div>
+            <div class="green"></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const enterButton = document.getElementById('enterButton');
+            const loading = document.getElementById('loading');
+            const loadingProgress = document.getElementById('loadingProgress');
+
+            // Function to handle the tap/click
+            function handleEnter() {
+                // Show loading animation
+                enterButton.style.display = 'none';
+                loading.style.display = 'block';
+
+                // Animate loading bar
+                let width = 0;
+                const interval = setInterval(function () {
+                    if (width >= 100) {
+                        clearInterval(interval);
+                        // Redirect to login page
+                        window.location.href = 'login-page.html';
+                    } else {
+                        width += 10;
+                        loadingProgress.style.width = width + '%';
+                    }
+                }, 100);
+            }
+
+            // Add event listeners
+            enterButton.addEventListener('click', handleEnter);
+
+            // Also allow tapping anywhere on the page
+            document.body.addEventListener('click', function (e) {
+                // Only trigger if not clicking the button (to avoid double trigger)
+                if (e.target !== enterButton && !enterButton.contains(e.target)) {
+                    handleEnter();
+                }
+            });
+
+            // Add keyboard support (Enter key)
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    handleEnter();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
